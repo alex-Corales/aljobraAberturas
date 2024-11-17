@@ -16,32 +16,48 @@ public class MamparaService implements IMamparaService{
 
     @Override
     public void saveMampara(MamparaModel mampara) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'saveMampara'");
+        Double calculoAltoPañoFijo = mampara.getAlto()-7.2;
+        Double calculoAltoPañoCorredizo = calculoAltoPañoFijo + 1.5;
+        Double calculoAnchoPaños = 0.0;
+
+        if(mampara.getAnchoAbajo() > mampara.getAnchoArriba()) 
+            calculoAnchoPaños = ((mampara.getAnchoAbajo() - 0.6) + 2) / 2; 
+        
+        if(mampara.getAnchoAbajo() < mampara.getAnchoArriba()) 
+            calculoAnchoPaños = ((mampara.getAnchoArriba() - 0.6) + 2) / 2;
+            
+        mampara.setCorteAltoPañoFijo(calculoAltoPañoFijo);
+        mampara.setCorteAltoPañoCorredizo(calculoAltoPañoCorredizo);
+        mampara.setCorteAnchoPaños(calculoAnchoPaños);
+
+        iMamparaRepository.save(mampara);
     }
 
     @Override
     public List<MamparaModel> getAllMamparas() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllMamparas'");
+        return iMamparaRepository.findAll();
     }
 
     @Override
-    public MamparaModel getMampara() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getMampara'");
+    public MamparaModel getMampara(Long idMampara) {
+        return iMamparaRepository.findById(idMampara).orElse(null);
     }
 
     @Override
     public void deteleMampara(Long idMampara) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deteleMampara'");
+        iMamparaRepository.deleteById(idMampara);
     }
 
     @Override
     public void updateMampara(Long idMampara, MamparaModel mamparaNueva) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateMampara'");
+        MamparaModel mamparaAux = this.getMampara(idMampara);
+        mamparaAux.setAnchoArriba(mamparaNueva.getAnchoArriba());
+        mamparaAux.setAnchoAbajo(mamparaNueva.getAnchoAbajo());
+        mamparaAux.setAlto(mamparaNueva.getAlto());
+        mamparaAux.setDireccion(mamparaNueva.getDireccion());
+        mamparaAux.setNumeroTelefono(mamparaNueva.getNumeroTelefono());
+        mamparaAux.setUbicacionDucha(mamparaNueva.getUbicacionDucha());
+        this.saveMampara(mamparaAux);
     }
     
 }
