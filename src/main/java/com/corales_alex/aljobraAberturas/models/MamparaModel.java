@@ -21,10 +21,15 @@ public class MamparaModel {
     private String direccion;
     private String numeroTelefono;
     private String ubicacionDucha;
+    private Double corteAltoPañoFijo;
+    private Double corteAltoPañoCorredizo;
+    private Double corteAnchoPaños;
 
     public MamparaModel(){}
 
-    public MamparaModel(Long idMampara, Double anchoArriba, Double anchoAbajo, Double alto, String direccion, String numeroTelefono, String ubicacionDucha){
+    public MamparaModel(Long idMampara, Double anchoArriba, Double anchoAbajo, Double alto, String direccion, 
+                        String numeroTelefono, String ubicacionDucha, Double corteAltoPañoFijo, Double corteAltoPañoCorredizo,
+                        Double corteAnchoPaños){
         this.idMampara = idMampara;
         this.anchoArriba = anchoArriba;
         this.anchoAbajo = anchoAbajo;
@@ -32,5 +37,8 @@ public class MamparaModel {
         this.direccion = direccion;
         this.numeroTelefono = numeroTelefono;
         this.ubicacionDucha = ubicacionDucha;
+        this.corteAltoPañoFijo = corteAltoPañoFijo;
+        this.corteAltoPañoCorredizo = corteAltoPañoCorredizo;
+        this.corteAnchoPaños = corteAnchoPaños;
     }
 }
