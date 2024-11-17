@@ -16,16 +16,19 @@ public class MamparaService implements IMamparaService{
 
     @Override
     public void saveMampara(MamparaModel mampara) {
-        Double calculoAltoPañoFijo = mampara.getAlto()-7.2;
-        Double calculoAltoPañoCorredizo = calculoAltoPañoFijo + 1.5;
-        Double calculoAnchoPaños = 0.0;
+        double calculoAltoPañoFijo = mampara.getAlto()-7.2;
+        double calculoAltoPañoCorredizo = calculoAltoPañoFijo + 1.5;
+        double calculoAnchoPaños = 0.0;
 
         if(mampara.getAnchoAbajo() > mampara.getAnchoArriba()) 
             calculoAnchoPaños = ((mampara.getAnchoAbajo() - 0.6) + 2) / 2; 
         
         if(mampara.getAnchoAbajo() < mampara.getAnchoArriba()) 
             calculoAnchoPaños = ((mampara.getAnchoArriba() - 0.6) + 2) / 2;
-            
+        
+        if (mampara.getAnchoAbajo() == mampara.getAnchoArriba()) 
+            calculoAnchoPaños = ((mampara.getAnchoArriba() - 0.6) + 2) / 2;
+
         mampara.setCorteAltoPañoFijo(calculoAltoPañoFijo);
         mampara.setCorteAltoPañoCorredizo(calculoAltoPañoCorredizo);
         mampara.setCorteAnchoPaños(calculoAnchoPaños);

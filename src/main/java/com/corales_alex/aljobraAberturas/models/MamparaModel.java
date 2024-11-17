@@ -14,21 +14,21 @@ public class MamparaModel {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long idMampara;
-    private Double anchoArriba;
-    private Double anchoAbajo;
-    private Double alto;
+    private double anchoArriba;
+    private double anchoAbajo;
+    private double alto;
     private String direccion;
     private String numeroTelefono;
     private String ubicacionDucha;
-    private Double corteAltoPañoFijo;
-    private Double corteAltoPañoCorredizo;
-    private Double corteAnchoPaños;
+    private double corteAltoPañoFijo;
+    private double corteAltoPañoCorredizo;
+    private double corteAnchoPaños;
 
     public MamparaModel(){}
 
-    public MamparaModel(Long idMampara, Double anchoArriba, Double anchoAbajo, Double alto, String direccion, 
-                        String numeroTelefono, String ubicacionDucha, Double corteAltoPañoFijo, Double corteAltoPañoCorredizo,
-                        Double corteAnchoPaños){
+    public MamparaModel(Long idMampara, double anchoArriba, double anchoAbajo, double alto, String direccion, 
+                        String numeroTelefono, String ubicacionDucha, double corteAltoPañoFijo, double corteAltoPañoCorredizo,
+                        double corteAnchoPaños){
         this.idMampara = idMampara;
         this.anchoArriba = anchoArriba;
         this.anchoAbajo = anchoAbajo;
