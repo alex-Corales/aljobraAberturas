@@ -3,6 +3,7 @@ package com.corales_alex.aljobraAberturas.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,7 +30,7 @@ public class MamparaController {
         return "La mampara se guardo con exito";
     } 
 
-    @GetMapping("/")
+    @GetMapping
     @ResponseBody
     public List<MamparaModel> getAllMamparas(){
         return iMamparaService.getAllMamparas();
@@ -43,6 +44,7 @@ public class MamparaController {
 
     @DeleteMapping("/eliminar/{idMampara}")
     public String deleteMampara(@PathVariable Long idMampara){
+        iMamparaService.deteleMampara(idMampara);
         return "La mampara se elimino con exito";
     }
 

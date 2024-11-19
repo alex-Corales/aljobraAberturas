@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Mamparas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <div class="container-fluid mt-3">
+        <h1 class="mb-4 text-center">Gestión de Mamparas</h1>
+        
+        <div class="row mb-4">
+            <div class="col-6">
+                <a href="index.html" class="btn btn-secondary w-100">Volver al Inicio</a>
+            </div>
+            <div class="col-6">
+                <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#mamparaModal">Nueva Mampara</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>Dirección</th>
+                                <th>Teléfono</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="mamparasList">
+                            <!-- Mamparas will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for creating/editing mampara -->
+    <div class="modal fade" id="mamparaModal" tabindex="-1" aria-labelledby="mamparaModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen-sm-down">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mamparaModalLabel">Nueva Mampara</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="mamparaForm">
+                        <input type="hidden" id="idMampara">
+                        <div class="mb-3">
+                            <label for="direccion" class="form-label">Dirección</label>
+                            <input type="text" class="form-control" id="direccion" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="numeroTelefono" class="form-label">Número de Teléfono</label>
+                            <input type="tel" class="form-control" id="numeroTelefono" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="alto" class="form-label">Alto</label>
+                            <input type="number" class="form-control" id="alto" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="anchoAbajo" class="form-label">Ancho Abajo</label>
+                            <input type="number" class="form-control" id="anchoAbajo" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="anchoArriba" class="form-label">Ancho Arriba</label>
+                            <input type="number" class="form-control" id="anchoArriba" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="ubicacionDucha" class="form-label">Ubicación Ducha</label>
+                            <select class="form-select" id="ubicacionDucha" required>
+                                <option value="Lado izquierdo">Lado izquierdo</option>
+                                <option value="Lado derecho">Lado derecho</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="saveMampara">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for viewing details -->
+    <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen-sm-down">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailsModalLabel">Detalles de la Mampara</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="detailsModalBody">
+                    <!-- Details will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for delete confirmation -->
+    <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteConfirmModalLabel">Confirmar Eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Está seguro de que desea eliminar esta mampara?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="confirmDelete">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Modal for successful deletion -->
+    <div class="modal fade" id="deleteSuccessModal" tabindex="-1" aria-labelledby="deleteSuccessModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteSuccessModalLabel">Eliminación Exitosa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    La mampara se ha eliminado con éxito.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="scripts/script.js"></script>
+</body>
+</html>
