@@ -22,9 +22,9 @@ public class LineaHerrero {
     @Id
     @GeneratedValue (strategy = GenerationType.SEQUENCE)
     private Long idLineaHerrero;
-    @OneToMany
+    @OneToMany(mappedBy = "lineaHerrero")
     private List<HerreroCorrediza> herreroCorrediza;
-    @OneToMany
+    /*@OneToMany
     private List<RajaProyectanteBanderola> rajaProyectanteBanderola;
     @OneToMany
     private List<Mosquitero> mosquitero;
@@ -33,5 +33,6 @@ public class LineaHerrero {
     @OneToMany
     private List<PrecioAluminio> precioAluminio;
     @OneToMany
-    private List<MargenDeGanancia> margenDeGanancia;    
+    private List<MargenDeGanancia> margenDeGanancia;*/
+
 }

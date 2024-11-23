@@ -19,14 +19,14 @@ public class AccesorioController {
     @Autowired
     private AccesorioService accesorioService;
 
-    @GetMapping 
+    @PostMapping 
     public String createAccesorio(){
         accesorioService.crearAccesorio();
         return "Accesorio creado con exito"; 
     }
 
-    @PostMapping("/buscar/{id}")
-    public List<AccesorioModel> getAllAccesorio (@PathVariable Long id){
+    @GetMapping("/buscar/{id}")
+    public AccesorioModel getAllAccesorio (@PathVariable Long id){
         return accesorioService.getAllAccesorio(id);
     }
 }
