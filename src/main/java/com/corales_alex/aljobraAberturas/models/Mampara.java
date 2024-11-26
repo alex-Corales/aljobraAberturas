@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Getter @Setter
 @Entity
-public class MamparaModel {
+public class Mampara {
     
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -24,9 +24,9 @@ public class MamparaModel {
     private double corteAltoPañoCorredizo;
     private double corteAnchoPaños;
 
-    public MamparaModel(){}
+    public Mampara(){}
 
-    public MamparaModel(Long idMampara, double anchoArriba, double anchoAbajo, double alto, String direccion, 
+    public Mampara(Long idMampara, double anchoArriba, double anchoAbajo, double alto, String direccion, 
                         String numeroTelefono, String ubicacionDucha, double corteAltoPañoFijo, double corteAltoPañoCorredizo,
                         double corteAnchoPaños){
         this.idMampara = idMampara;

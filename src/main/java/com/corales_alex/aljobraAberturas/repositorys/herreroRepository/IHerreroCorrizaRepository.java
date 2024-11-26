@@ -1,4 +1,4 @@
-package com.corales_alex.aljobraAberturas.repositorys;
+package com.corales_alex.aljobraAberturas.repositorys.herreroRepository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

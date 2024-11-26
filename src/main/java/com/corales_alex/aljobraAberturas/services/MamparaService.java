@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.corales_alex.aljobraAberturas.models.MamparaModel;
+import com.corales_alex.aljobraAberturas.models.Mampara;
 import com.corales_alex.aljobraAberturas.repositorys.IMamparaRepository;
 
 @Service
@@ -15,7 +15,7 @@ public class MamparaService implements IMamparaService{
     private IMamparaRepository iMamparaRepository;
 
     @Override
-    public void saveMampara(MamparaModel mampara) {
+    public void saveMampara(Mampara mampara) {
         double calculoAltoPañoFijo = mampara.getAlto()-7.2;
         double calculoAltoPañoCorredizo = calculoAltoPañoFijo + 1.5;
         double calculoAnchoPaños = 0.0;
@@ -37,12 +37,12 @@ public class MamparaService implements IMamparaService{
     }
 
     @Override
-    public List<MamparaModel> getAllMamparas() {
+    public List<Mampara> getAllMamparas() {
         return iMamparaRepository.findAll();
     }
 
     @Override
-    public MamparaModel getMampara(Long idMampara) {
+    public Mampara getMampara(Long idMampara) {
         return iMamparaRepository.findById(idMampara).orElse(null);
     }
 
@@ -52,8 +52,8 @@ public class MamparaService implements IMamparaService{
     }
 
     @Override
-    public void updateMampara(Long idMampara, MamparaModel mamparaNueva) {
-        MamparaModel mamparaAux = this.getMampara(idMampara);
+    public void updateMampara(Long idMampara, Mampara mamparaNueva) {
+        Mampara mamparaAux = this.getMampara(idMampara);
         mamparaAux.setAnchoArriba(mamparaNueva.getAnchoArriba());
         mamparaAux.setAnchoAbajo(mamparaNueva.getAnchoAbajo());
         mamparaAux.setAlto(mamparaNueva.getAlto());

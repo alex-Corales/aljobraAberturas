@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.corales_alex.aljobraAberturas.models.MamparaModel;
+import com.corales_alex.aljobraAberturas.models.Mampara;
 import com.corales_alex.aljobraAberturas.services.IMamparaService;
 
 @RestController
@@ -24,20 +24,20 @@ public class MamparaController {
     private IMamparaService iMamparaService;
 
     @PostMapping("/crear")
-    public String saveMampara(@RequestBody MamparaModel mampara){
+    public String saveMampara(@RequestBody Mampara mampara){
         iMamparaService.saveMampara(mampara);
         return "La mampara se guardo con exito";
     } 
 
     @GetMapping
     @ResponseBody
-    public List<MamparaModel> getAllMamparas(){
+    public List<Mampara> getAllMamparas(){
         return iMamparaService.getAllMamparas();
     }
 
     @GetMapping("/{idMampara}")
     @ResponseBody
-    public MamparaModel getMamparaModel(@PathVariable Long idMampara){
+    public Mampara getMamparaModel(@PathVariable Long idMampara){
         return iMamparaService.getMampara(idMampara);
     }
 
@@ -48,7 +48,7 @@ public class MamparaController {
     }
 
     @PutMapping("/modificar/{idMampara}")
-    public String updateMampara(@PathVariable Long idMampara, @RequestBody MamparaModel mamparaNueva){
+    public String updateMampara(@PathVariable Long idMampara, @RequestBody Mampara mamparaNueva){
         iMamparaService.updateMampara(idMampara, mamparaNueva);
         return "La mampara se modifico con exito";
     }

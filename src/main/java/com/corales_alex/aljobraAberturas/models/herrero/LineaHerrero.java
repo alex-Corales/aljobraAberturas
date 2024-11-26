@@ -2,7 +2,9 @@ package com.corales_alex.aljobraAberturas.models.herrero;
 
 import java.util.List;
 
-import jakarta.annotation.Generated;
+import com.corales_alex.aljobraAberturas.models.Accesorio;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,16 +25,18 @@ public class LineaHerrero {
     @GeneratedValue (strategy = GenerationType.SEQUENCE)
     private Long idLineaHerrero;
     @OneToMany(mappedBy = "lineaHerrero")
+    @JsonManagedReference
     private List<HerreroCorrediza> herreroCorrediza;
-    /*@OneToMany
+    @OneToMany(mappedBy = "lineaHerrero")
     private List<RajaProyectanteBanderola> rajaProyectanteBanderola;
-    @OneToMany
+    @OneToMany(mappedBy = "lineaHerrero")
     private List<Mosquitero> mosquitero;
-    @OneToMany
+    @OneToMany(mappedBy = "lineaHerrero")
     private List<PuertaDeRabatir> puertaDeRabatir;
-    @OneToMany
-    private List<PrecioAluminio> precioAluminio;
-    @OneToMany
-    private List<MargenDeGanancia> margenDeGanancia;*/
+    @OneToOne(mappedBy = "lineaHerrero")
+    private PrecioAluminio precioAluminio;
+    @OneToOne(mappedBy = "lineaHerrero")
+    private MargenDeGanancia margenDeGanancia;
 
 }
+ 

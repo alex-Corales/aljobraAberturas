@@ -1,6 +1,8 @@
-package com.corales_alex.aljobraAberturas.models.herrero;
+package com.corales_alex.aljobraAberturas.models.tornilloGoma;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.corales_alex.aljobraAberturas.models.Accesorio;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,29 +15,27 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-public class HerreroCorrediza {
+public class TornilloGoma {
     @Id
     @GeneratedValue (strategy = GenerationType.SEQUENCE)
-    private Long idHerreroCorrediza;
-    private String codigo;
-    private String detalle;
+    private Long idTornilloGoma;
+    private String nombreTornilloGoma;
     private int cantidad;
     private double precioUnitario;
     private double precio;
     @ManyToOne
-    @JoinColumn(name = "linea_herrero_id") // Define la columna de unión en la tabla de HerreroCorrediza
-    @JsonBackReference
-    private LineaHerrero lineaHerrero;
-
-    public HerreroCorrediza(String codigo, String detalle, int cantidad, double precioUnitario, double precio, LineaHerrero lineaHerrero){
-        this.codigo = codigo;
-        this.detalle = detalle;
+    @JoinColumn(name = "accesorio_id")
+    @JsonIgnore
+    private Accesorio accesorio;
+    
+    public TornilloGoma(String nombreTornilloGoma, int cantidad, double precioUnitario, double precio, Accesorio accesorio){
+        this.nombreTornilloGoma = nombreTornilloGoma;
         this.cantidad = cantidad;
         this.precioUnitario = precioUnitario;
         this.precio = precio;
-        this.lineaHerrero = lineaHerrero;
+        this.accesorio = accesorio;
     }
 }
