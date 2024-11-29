@@ -25,7 +25,7 @@ import com.corales_alex.aljobraAberturas.repositorys.herreroRepository.IPrecioAl
 import com.corales_alex.aljobraAberturas.repositorys.herreroRepository.IPuertaDeRabatirRepository;
 import com.corales_alex.aljobraAberturas.repositorys.herreroRepository.IRajaProyectanteBanderolaRepository;
 import com.corales_alex.aljobraAberturas.repositorys.tornilloGomaRepository.ITornilloGomaRepository;
-import com.corales_alex.aljobraAberturas.repositorys.vidrioRepositoey.IVidrioRepository;
+import com.corales_alex.aljobraAberturas.repositorys.vidrioRepository.IVidrioRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 
