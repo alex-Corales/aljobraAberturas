@@ -1,38 +1,109 @@
 package com.corales_alex.aljobraAberturas.services;
 
-import javax.sound.sampled.Line;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.corales_alex.aljobraAberturas.models.Accesorio;
+import com.corales_alex.aljobraAberturas.models.herrero.HerreroCorrediza;
 import com.corales_alex.aljobraAberturas.models.herrero.LineaHerrero;
+import com.corales_alex.aljobraAberturas.models.herrero.MargenDeGanancia;
+import com.corales_alex.aljobraAberturas.models.herrero.Mosquitero;
+import com.corales_alex.aljobraAberturas.models.herrero.PrecioAluminio;
+import com.corales_alex.aljobraAberturas.models.herrero.PuertaDeRabatir;
+import com.corales_alex.aljobraAberturas.models.herrero.RajaProyectanteBanderola;
+import com.corales_alex.aljobraAberturas.models.tornilloGoma.TornilloGoma;
+import com.corales_alex.aljobraAberturas.models.vidrio.Vidrio;
 import com.corales_alex.aljobraAberturas.repositorys.IAccesorioRepository;
+import com.corales_alex.aljobraAberturas.repositorys.herreroRepository.IHerreroCorrizaRepository;
 import com.corales_alex.aljobraAberturas.repositorys.herreroRepository.ILineaHerreroRepository;
-import com.corales_alex.aljobraAberturas.services.herreroService.IHerreroCorredizaService;
-import com.corales_alex.aljobraAberturas.services.herreroService.ILineaHerreroService;
+import com.corales_alex.aljobraAberturas.repositorys.herreroRepository.IMargenDeGananciaRepository;
+import com.corales_alex.aljobraAberturas.repositorys.herreroRepository.IMosquiteroRepository;
+import com.corales_alex.aljobraAberturas.repositorys.herreroRepository.IPrecioAluminioRepository;
+import com.corales_alex.aljobraAberturas.repositorys.herreroRepository.IPuertaDeRabatirRepository;
+import com.corales_alex.aljobraAberturas.repositorys.herreroRepository.IRajaProyectanteBanderolaRepository;
+import com.corales_alex.aljobraAberturas.repositorys.tornilloGomaRepository.ITornilloGomaRepository;
+import com.corales_alex.aljobraAberturas.repositorys.vidrioRepository.IVidrioRepository;
 
 @Service
 public class AccesorioService implements IAccesorioService {
 
     @Autowired
     private IAccesorioRepository iAccesorioRepository;
-
     @Autowired
-    private ILineaHerreroService iLineaHerreroService;
+    private ILineaHerreroRepository iLineaHerreroRepository;
     @Autowired
-    private IHerreroCorredizaService iHerreroCorredizaService;
+    private IRajaProyectanteBanderolaRepository iRajaProyectanteBanderolaRepository;
+    @Autowired
+    private IMosquiteroRepository iMosquiteroRepository;
+    @Autowired
+    private IPuertaDeRabatirRepository iPuertaDeRabatirRepository;
+    @Autowired
+    private IPrecioAluminioRepository iPrecioAluminioRepository;
+    @Autowired
+    private IMargenDeGananciaRepository iMargenDeGananciaRepository;
+    @Autowired
+    private IVidrioRepository iVidrioRepository;
+    @Autowired
+    private ITornilloGomaRepository iTornilloGomaRepository;
+    @Autowired
+    private IHerreroCorrizaRepository iHerreroCorrizaRepository;
+    
 
     @Override
-    public void crearAccesorio() {
-        Accesorio accesorio = new Accesorio();
-        LineaHerrero lineaHerrero = new LineaHerrero();
-        
+    public void crearAccesorio(Accesorio accesorio) {
+
+        if(accesorio.getIdAccesorio() != null){
+            crearYGuardarAccesorio(accesorio);
+        }else{ 
+            // Crear y guardar LineaHerrero
+            LineaHerrero lineaHerrero = crearYGuardarLineaHerrero();
+
+            // Crear y guardar HerreroCorredizas asociadas a LineaHerrero
+            List<HerreroCorrediza> listaHerreroCorredizas = crearYGuardarHerreroCorredizas(lineaHerrero);
+
+            // Crear y guardar RajaProyectanteBanderolas asociadas a LineaHerrero
+            List<RajaProyectanteBanderola> listaRajaProyectanteBanderolas = crearYGuardarRajaProyectanteBanderolas(
+                    lineaHerrero);
+
+            List<Mosquitero> mosquiteros = crearYGuardarsMosquiteros(lineaHerrero);
+
+            List<PuertaDeRabatir> puertasDeRebatir = crearYGuardarPuertaDeRabatir(lineaHerrero);
+
+            PrecioAluminio precioAluminio = crearYGuardarPrecioAluminio(lineaHerrero);
+
+            MargenDeGanancia margenDeGanancia = crearYGuardarMargenDeGanancia(lineaHerrero);
+
+            // Asignar las listas a LineaHerrero
+            lineaHerrero.setHerreroCorrediza(listaHerreroCorredizas);
+            lineaHerrero.setRajaProyectanteBanderola(listaRajaProyectanteBanderolas);
+            lineaHerrero.setMosquitero(mosquiteros);
+            lineaHerrero.setPuertaDeRabatir(puertasDeRebatir);
+            lineaHerrero.setPrecioAluminio(precioAluminio);
+            lineaHerrero.setMargenDeGanancia(margenDeGanancia);
+
+            // Crear y guardar AccesorioModel
+            Accesorio accesorioNuevo = crearYGuardarAccesorio(accesorio);
+
+            // Asignar LineaHerrero a AccesorioModel
+            accesorioNuevo.setLineaHerrero(lineaHerrero);
+
+            List<Vidrio> vidrio = crearYGuardarVidrio(accesorioNuevo);
+            List<TornilloGoma> tornilloGoma = crearYGuardarTornillosGomas(accesorioNuevo);
+
+            // Asignar Vidrios y Tornillos a AccesorioModel
+            accesorioNuevo.setVidrio(vidrio);
+            accesorioNuevo.setTornilloGoma(tornilloGoma);
+
+            // Guardar el accesorio con la referencia de LineaHerrero
+            iAccesorioRepository.save(accesorioNuevo);
+        }
     }
 
-    /*private Accesorio crearYGuardarAccesorio() {
-        Accesorio accesorioModel = new Accesorio();
-        iAccesorioRepository.save(accesorioModel);
-        return accesorioModel;
+    private Accesorio crearYGuardarAccesorio(Accesorio accesorio) {
+        //Accesorio accesorioModel = new Accesorio();
+        return iAccesorioRepository.save(accesorio);
     }
 
     private LineaHerrero crearYGuardarLineaHerrero() {
@@ -136,7 +207,7 @@ public class AccesorioService implements IAccesorioService {
 
         iTornilloGomaRepository.saveAll(tornilloGoma);
         return tornilloGoma;
-    }*/
+    }
 
     @Override
     public Accesorio getAllAccesorio(Long id) {
@@ -145,9 +216,9 @@ public class AccesorioService implements IAccesorioService {
 
     @Override
     public void updateAccesorio(Long id, Accesorio accesorioNuevo) {
-        Accesorio accesorioExistente = this.getAllAccesorio(id);
+        //Accesorio accesorioExistente = this.getAllAccesorio(id);
 
-        accesorioExistente.getLineaHerrero().setHerreroCorrediza(accesorioNuevo.getLineaHerrero().getHerreroCorrediza());
+        /*accesorioExistente.getLineaHerrero().setHerreroCorrediza(accesorioNuevo.getLineaHerrero().getHerreroCorrediza());
         accesorioExistente.getLineaHerrero().setRajaProyectanteBanderola(accesorioNuevo.getLineaHerrero().getRajaProyectanteBanderola());
         accesorioExistente.getLineaHerrero().setMosquitero(accesorioNuevo.getLineaHerrero().getMosquitero());
         accesorioExistente.getLineaHerrero().setPuertaDeRabatir(accesorioNuevo.getLineaHerrero().getPuertaDeRabatir());
@@ -155,9 +226,9 @@ public class AccesorioService implements IAccesorioService {
         accesorioExistente.getLineaHerrero().setMargenDeGanancia(accesorioNuevo.getLineaHerrero().getMargenDeGanancia());
         accesorioExistente.setLineaHerrero(accesorioNuevo.getLineaHerrero());
         accesorioExistente.setVidrio(accesorioNuevo.getVidrio());
-        accesorioExistente.setTornilloGoma(accesorioNuevo.getTornilloGoma());
+        accesorioExistente.setTornilloGoma(accesorioNuevo.getTornilloGoma());*/
         
-        iAccesorioRepository.save(accesorioExistente);
+        this.crearAccesorio(accesorioNuevo);
         
     }
 

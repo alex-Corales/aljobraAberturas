@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +26,7 @@ public class AccesorioController {
     @PostMapping
     public ResponseEntity<String> createAccesorio() {
         try {
-            accesorioService.crearAccesorio();
+            accesorioService.crearAccesorio(new Accesorio());
             return ResponseEntity.ok("Accesorio creado con éxito");
         } catch (Exception e) {
             // Loguear el error (opcional)
@@ -40,7 +41,7 @@ public class AccesorioController {
         return accesorioService.getAllAccesorio(id);
     }
 
-    @PostMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public String updateAccesorio(@PathVariable Long id, @RequestBody Accesorio accesorioNuevo){
         accesorioService.updateAccesorio(id, accesorioNuevo);
         return "El accesorio se actualizo con exito";
